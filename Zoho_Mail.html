@@ -394,38 +394,39 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
   <div class="section-label">Column Fields Reference</div>
   <div class="col-ref">
     <div class="col-ref-hdr" onclick="toggleRef('r4')">
-      <div class="col-ref-ttl">📋 Under Observation Report <span style="font-size:9px;color:var(--muted);font-weight:400;">(1 file · 11 columns)</span></div>
+      <div class="col-ref-ttl">📋 Under Observation Report <span style="font-size:9px;color:var(--muted);font-weight:400;">(1 file · 13 columns)</span></div>
       <span class="col-ref-arrow" id="r4-arr">▶</span>
     </div>
     <div class="col-ref-body" id="r4-body">
       <div class="col-file-sec">
-        <span class="cfl purple">🔵 Under Observation Follow-up Report (11 columns)</span>
+        <span class="cfl purple">🔵 Under Observation Follow-up Report (13 columns)</span>
         <table class="ctbl">
           <thead><tr><th>Column Name</th><th>Description</th><th>Sample Value</th><th></th></tr></thead>
           <tbody>
-            <tr><td><span class="cfn">Request ID</span></td><td class="cdesc">Unique Zoho ticket / request ID number.</td><td class="csamp">1116</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Project Name</span></td><td class="cdesc">Client or project this ticket belongs to.</td><td class="csamp">TVS</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Request Id</span></td><td class="cdesc">Unique Zoho ticket / request ID number.</td><td class="csamp">01096</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Project Name</span></td><td class="cdesc">Client or project this ticket belongs to.</td><td class="csamp">TATA POWER RM</td><td><span class="creq r">Required</span></td></tr>
             <tr><td><span class="cfn">Priority</span></td><td class="cdesc">Ticket urgency: Critical / High / Medium / Low.</td><td class="csamp">High</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Ticket Created By</span></td><td class="cdesc">Name of the person who raised the ticket.</td><td class="csamp">Ravi Kumar</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Assigned To</span></td><td class="cdesc">Developer name responsible for the fix.</td><td class="csamp">Sobana. M (EM5846)</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Subject</span></td><td class="cdesc">Brief title / summary of the ticket issue.</td><td class="csamp">Login page error on IE11</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Description</span></td><td class="cdesc">Detailed description of the reported issue.</td><td class="csamp">User unable to login using IE11 browser...</td><td><span class="creq o">Optional</span></td></tr>
-            <tr><td><span class="cfn">Resolution</span></td><td class="cdesc">Resolution steps or findings noted during observation.</td><td class="csamp">Fix verified by QA in staging environment.</td><td><span class="creq o">Optional</span></td></tr>
-            <tr><td><span class="cfn">Developer Solution</span></td><td class="cdesc">Solution provided by the developer after fix.</td><td class="csamp">Updated CSS for IE11 compatibility.</td><td><span class="creq o">Optional</span></td></tr>
+            <tr><td><span class="cfn">Ticket Created By</span></td><td class="cdesc">Name of the person who raised the ticket.</td><td class="csamp">Raghul. R (EM6305)</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Assigned To</span></td><td class="cdesc">Developer name(s) responsible for the fix.</td><td class="csamp">Raghul. R (EM6305);Vishal. T (EM7028)</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Subject</span></td><td class="cdesc">Brief title / summary of the ticket issue.</td><td class="csamp">RGV data cancel not shown</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Description</span></td><td class="cdesc">Detailed description of the reported issue.</td><td class="csamp">Kep_RGVAUT table locked due to WCS status...</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Resolution</span></td><td class="cdesc">Resolution steps or findings noted during observation.</td><td class="csamp">autsts Store procedure need to update...</td><td><span class="creq o">Optional</span></td></tr>
+            <tr><td><span class="cfn">Developer Solution</span></td><td class="cdesc">Solution provided by the developer after fix.</td><td class="csamp">Extra Condition is added for this case</td><td><span class="creq o">Optional</span></td></tr>
             <tr><td><span class="cfn">Status</span></td><td class="cdesc">Current ticket status. Should be "Under Observation".</td><td class="csamp">Under Observation</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Created Time</span></td><td class="cdesc">Date &amp; time the ticket was originally created. Auto-converts Excel serials.</td><td class="csamp">10-02-2026 09:30</td><td><span class="creq r">Required</span></td></tr>
-            <tr><td><span class="cfn">Modified Time</span></td><td class="cdesc">Date &amp; time of last status update / modification. Auto-converts Excel serials.</td><td class="csamp">06-03-2026 14:22</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Created Time</span></td><td class="cdesc">Date &amp; time the ticket was originally created.</td><td class="csamp">2026-01-06 09:32:06</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Modified Time</span></td><td class="cdesc">Date &amp; time of last status update.</td><td class="csamp">2026-02-19 15:11:52</td><td><span class="creq r">Required</span></td></tr>
+            <tr><td><span class="cfn">Days Since Modified</span></td><td class="cdesc">Days since last modification (calculated).</td><td class="csamp">22</td><td><span class="creq o">Optional</span></td></tr>
           </tbody>
         </table>
       </div>
       <div style="margin:6px 14px 12px;padding:8px 10px;background:rgba(155,89,182,.07);border:1px solid rgba(155,89,182,.22);border-radius:6px;">
-        <div style="font-size:9px;color:var(--purple-light);line-height:1.7;">💡 <strong>Flexible names</strong> — auto-detected. "Request" or "Ticket" = "Request ID" · "Created By" = "Ticket Created By" · "Dev Solution" = "Developer Solution" · "Modified" = "Modified Time"</div>
+        <div style="font-size:9px;color:var(--purple-light);line-height:1.7;">💡 <strong>Column Mapping:</strong> The tool automatically maps your Excel columns. If "Days Since Modified" column exists, it will be used; otherwise calculated from Modified Time.</div>
       </div>
     </div>
   </div>
   <div class="section-label">Step 1 — Upload File</div>
   <div class="upload-card">
-    <div class="upload-card-header"><span class="upload-card-icon">🔵</span><div><div class="upload-card-title">Under Observation Follow-up Report</div><div class="upload-card-desc">Tickets pending client/QA sign-off · 11 columns</div></div></div>
+    <div class="upload-card-header"><span class="upload-card-icon">🔵</span><div><div class="upload-card-title">Under Observation Follow-up Report</div><div class="upload-card-desc">Tickets pending client/QA sign-off · 13 columns</div></div></div>
     <div class="upload-zone" id="zone5" onclick="document.getElementById('file5').click()"><div class="upload-zone-icon">📂</div><div class="upload-zone-label">Click or drag &amp; drop</div><div class="upload-zone-hint">.xlsx / .xls / .csv</div></div>
     <div class="upload-status" id="status5">✅ Loaded</div>
     <input type="file" id="file5" accept=".xlsx,.xls,.csv" style="display:none">
@@ -508,6 +509,20 @@ function parseDate(val) {
   if (val === null || val === undefined || val === '') return '';
   const str = String(val).trim();
   if (!str || str === '0') return '';
+  
+  // Handle ISO date format (YYYY-MM-DD HH:MM:SS)
+  if (/^\d{4}-\d{2}-\d{2}/.test(str)) {
+    const date = new Date(str);
+    if (!isNaN(date.getTime())) {
+      const dd = String(date.getDate()).padStart(2, '0');
+      const mo = String(date.getMonth() + 1).padStart(2, '0');
+      const yyyy = date.getFullYear();
+      const hh = String(date.getHours()).padStart(2, '0');
+      const mm = String(date.getMinutes()).padStart(2, '0');
+      return `${dd}-${mo}-${yyyy} ${hh}:${mm}`;
+    }
+  }
+  
   if (/^\d+(\.\d+)?$/.test(str)) {
     const c = excelSerialToDate(str);
     if (c) return c;
@@ -519,16 +534,33 @@ function parseDate(val) {
 function getDaysDifference(dateStr) {
   if (!dateStr || dateStr === '—') return null;
   
-  // Parse date string in format DD-MM-YYYY HH:MM
-  const parts = dateStr.split(' ');
-  if (parts.length < 1) return null;
+  // Parse date string in format DD-MM-YYYY HH:MM or YYYY-MM-DD HH:MM:SS
+  let day, month, year;
   
-  const dateParts = parts[0].split('-');
-  if (dateParts.length !== 3) return null;
-  
-  const day = parseInt(dateParts[0]);
-  const month = parseInt(dateParts[1]) - 1; // Month is 0-indexed
-  const year = parseInt(dateParts[2]);
+  if (dateStr.includes('-')) {
+    const parts = dateStr.split(' ');
+    if (parts.length < 1) return null;
+    
+    const dateParts = parts[0].split('-');
+    if (dateParts.length === 3) {
+      // Check if it's YYYY-MM-DD or DD-MM-YYYY
+      if (dateParts[0].length === 4) {
+        // YYYY-MM-DD format
+        year = parseInt(dateParts[0]);
+        month = parseInt(dateParts[1]) - 1;
+        day = parseInt(dateParts[2]);
+      } else {
+        // DD-MM-YYYY format
+        day = parseInt(dateParts[0]);
+        month = parseInt(dateParts[1]) - 1;
+        year = parseInt(dateParts[2]);
+      }
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
   
   const date = new Date(year, month, day);
   const today = new Date();
@@ -540,14 +572,14 @@ function getDaysDifference(dateStr) {
   const diffTime = today - date;
   const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
   
-  return diffDays;
+  return diffDays >= 0 ? diffDays : 0;
 }
 
-// Truncate text to 2-3 lines (approximately 150 characters)
-function truncateToLines(text, maxLines = 3) {
-  if (!text || text === '—') return '—';
-  if (text.length <= 150) return text;
-  return text.substring(0, 150) + '…';
+// Truncate text to approximately 2-3 lines (120 characters for description/resolution)
+function truncateToLines(text, maxChars = 120) {
+  if (!text || text === '—' || text === '') return '—';
+  if (text.length <= maxChars) return text;
+  return text.substring(0, maxChars) + '…';
 }
 
 // Normalize key for fuzzy matching
@@ -565,7 +597,7 @@ function fk(obj, pats) {
   return null;
 }
 
-// Truncate function (only used for preview, not for email generation)
+// Truncate function for other fields
 function trunc(s, n) {
   if (!s) return '—';
   return s.length > n ? s.substring(0, n) + '…' : s;
@@ -681,10 +713,13 @@ function parseDev(raw) {
   }));
 }
 
+// Updated parseObs function to match your Excel structure
 function parseObs(raw) {
   if (!raw.length) return [];
   const s = raw[0];
-  const idK = fk(s, ['requestid', 'ticketid', 'reqid', 'request', 'ticket', 'id']);
+  
+  // Map column names based on your Excel structure
+  const idK = fk(s, ['requestid', 'requestid', 'reqid', 'request', 'ticketid', 'ticket', 'id']);
   const pjK = fk(s, ['projectname', 'project', 'name', 'client']);
   const prK = fk(s, ['priority']);
   const cbK = fk(s, ['ticketcreatedby', 'createdby', 'raisedby', 'requestedby', 'createdbyname']);
@@ -696,24 +731,38 @@ function parseObs(raw) {
   const stK = fk(s, ['status']);
   const ctK = fk(s, ['createdtime', 'createdat', 'createddate', 'ticketcreated', 'created']);
   const mtK = fk(s, ['modifiedtime', 'modifiedat', 'modifieddate', 'lastupdated', 'modified', 'lastmodified', 'updatedat']);
+  const daysK = fk(s, ['dayssincemodified', 'daysmodified', 'days', 'daysdiff', 'daysdifference']);
   
   return raw.filter(r => {
     const n = pjK ? String(r[pjK] || '').trim() : '';
     return n && n.toLowerCase() !== 'total';
-  }).map(r => ({
-    id: idK ? String(r[idK] || '').trim() : '',
-    project: pjK ? String(r[pjK] || '').trim() : '',
-    priority: prK ? String(r[prK] || '').trim() : '',
-    createdBy: cbK ? String(r[cbK] || '').trim() : '',
-    assignee: asK ? String(r[asK] || '').trim() : '',
-    subject: subK ? String(r[subK] || '').trim() : '',
-    desc: descK ? String(r[descK] || '').trim() : '',
-    resolution: resK ? String(r[resK] || '').trim() : '',
-    devSolution: devSK ? String(r[devSK] || '').trim() : '',
-    status: stK ? String(r[stK] || '').trim() : '',
-    createdTime: ctK ? parseDate(r[ctK]) : '',
-    modifiedTime: mtK ? parseDate(r[mtK]) : ''
-  })).filter(r => r.project);
+  }).map(r => {
+    // Parse dates
+    const createdTime = ctK ? parseDate(r[ctK]) : '';
+    const modifiedTime = mtK ? parseDate(r[mtK]) : '';
+    
+    // Get days from column or calculate
+    let daysSinceModified = daysK ? parseInt(r[daysK] || 0) || 0 : 0;
+    if (!daysSinceModified && modifiedTime) {
+      daysSinceModified = getDaysDifference(modifiedTime);
+    }
+    
+    return {
+      id: idK ? String(r[idK] || '').trim() : '',
+      project: pjK ? String(r[pjK] || '').trim() : '',
+      priority: prK ? String(r[prK] || '').trim() : '',
+      createdBy: cbK ? String(r[cbK] || '').trim() : '',
+      assignee: asK ? String(r[asK] || '').trim() : '',
+      subject: subK ? String(r[subK] || '').trim() : '',
+      desc: descK ? String(r[descK] || '').trim() : '',
+      resolution: resK ? String(r[resK] || '').trim() : '',
+      devSolution: devSK ? String(r[devSK] || '').trim() : '',
+      status: stK ? String(r[stK] || '').trim() : 'Under Observation',
+      createdTime: createdTime,
+      modifiedTime: modifiedTime,
+      daysSinceModified: daysSinceModified
+    };
+  }).filter(r => r.project);
 }
 
 // ============================================
@@ -921,9 +970,9 @@ function dBgObs(d) { return d > 20 ? '#ffeaea' : d > 7 ? '#fffde7' : '#e8f5e9'; 
 function dCZero(d) { return d > 45 ? '#b71c1c' : d > 30 ? '#c0392b' : d > 14 ? '#b8860b' : '#2e7d32'; }
 function dBgZero(d) { return d > 45 ? '#ffeaea' : d > 30 ? '#fff3e0' : d > 14 ? '#fffde7' : '#e8f5e9'; }
 
-// Days color for observation based on modified date
+// Days color for observation based on days since modified
 function getDaysColor(days) {
-  if (days === null) return { bg: '#f0f0f0', c: '#999999' };
+  if (days === null || days === undefined) return { bg: '#f0f0f0', c: '#999999' };
   if (days > 14) return { bg: '#ffeaea', c: '#b71c1c' };
   if (days > 7) return { bg: '#fff3e0', c: '#e65100' };
   if (days > 3) return { bg: '#fffde7', c: '#f57f17' };
@@ -1211,7 +1260,7 @@ ${crit > 0 ? `<table role="presentation" border="0" cellpadding="0" cellspacing=
 <p style="font-size:13px;font-weight:700;color:#0a1628;margin:20px 0 8px 0;font-family:Calibri,Arial,sans-serif;">📋 Project-wise Summary</p>
 <p style="font-size:11px;color:#6b7a8d;margin:0 0 10px 0;font-family:Calibri,Arial,sans-serif;">Report Date: <strong style="color:#0a1628;">${today}</strong> &nbsp;|&nbsp; Total Under Development: <strong style="color:#0e9aa7;">${total} tickets</strong> &nbsp;|&nbsp; Projects: <strong style="color:#0a1628;">${projects.length}</strong> &nbsp;|&nbsp; Critical: <strong style="color:#c0392b;">${crit}</strong> &nbsp;|&nbsp; High: <strong style="color:#e65100;">${high}</strong></p>
 
-<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-radius:8px;overflow:hidden;border:1px solid #c8eef2;margin-bottom:22px;">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="60%" style="border-radius:8px;overflow:hidden;border:1px solid #c8eef2;margin-bottom:22px;">
 <thead><tr style="background:#000000;">
 <th style="padding:8px 10px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Project Name</th>
 <th style="padding:8px 10px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Tickets</th>
@@ -1261,7 +1310,7 @@ ${crit > 0 ? `<table role="presentation" border="0" cellpadding="0" cellspacing=
   showToast('✅ Under Development email generated!', '#0e9aa7');
 }
 
-// Under Observation (Tab 4) - FIXED: Reduced table size, truncated description/resolution, added days difference
+// Under Observation (Tab 4) - Updated to match your Excel structure
 function generateObsEmail() {
   if (!obsData.length) {
     alert('Please upload the Under Observation report first.');
@@ -1274,6 +1323,7 @@ function generateObsEmail() {
   const projects = [...new Set(obsData.map(r => r.project))];
   const crit = obsData.filter(r => (r.priority || '').toLowerCase() === 'critical').length;
   const high = obsData.filter(r => (r.priority || '').toLowerCase() === 'high').length;
+  const med = obsData.filter(r => (r.priority || '').toLowerCase() === 'medium').length;
   
   // Smaller project summary table with reduced padding and font size
   const projSummary = projects.map(p => {
@@ -1288,100 +1338,88 @@ function generateObsEmail() {
 </tr>`;
   }).join('');
   
-  // Main detail rows — with truncated description/resolution and days difference from modified date
+  // Main detail rows with truncated description/resolution and days column
   const detRows = obsData.map((r, i) => {
     const pc = prioC(r.priority);
     const hasSolution = r.devSolution && r.devSolution.trim() && r.devSolution !== '—';
     
-    // Calculate days difference from modified date
-    const daysDiff = getDaysDifference(r.modifiedTime);
-    const daysColor = getDaysColor(daysDiff);
+    // Get days value (either from column or calculated)
+    const daysValue = r.daysSinceModified || 0;
+    const daysColor = getDaysColor(daysValue);
     
-    // Truncate description and resolution to 2-3 lines
-    const truncatedDesc = truncateToLines(r.desc, 3);
-    const truncatedResolution = truncateToLines(r.resolution, 3);
+    // Truncate description and resolution to 2-3 lines (120 chars)
+    const truncatedDesc = truncateToLines(r.desc, 120);
+    const truncatedResolution = truncateToLines(r.resolution, 120);
+    const truncatedDevSolution = truncateToLines(r.devSolution, 100);
     
     return `<tr style="background-color:${i % 2 === 0 ? '#fff' : '#fdf8ff'};">
-<td style="padding:6px 8px;font-size:10px;font-family:Arial,sans-serif;color:#7b2d8b;font-weight:700;border-bottom:1px solid #e8d8f8;white-space:nowrap;">#${r.id || '—'}</td>
-<td style="padding:6px 8px;font-size:10px;font-family:Arial,sans-serif;color:#1a2a3a;font-weight:600;border-bottom:1px solid #e8d8f8;">${r.project}</td>
-<td style="padding:6px 8px;text-align:center;border-bottom:1px solid #e8d8f8;"><span style="background:${pc.bg};color:${pc.c};font-weight:700;padding:2px 6px;border-radius:8px;font-size:9px;">${r.priority || '—'}</span></td>
-<td style="padding:6px 8px;font-size:10px;font-family:Arial,sans-serif;color:#3a5068;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${trunc(r.createdBy, 20) || '—'}</td>
-<td style="padding:6px 8px;font-size:10px;font-family:Arial,sans-serif;color:#3a5068;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${trunc(r.assignee, 20) || '—'}</td>
-<td style="padding:6px 8px;font-size:10px;font-family:Arial,sans-serif;color:#1a2a3a;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:150px;">${trunc(r.subject, 40) || '—'}</td>
-<td style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#5a6a7a;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:120px;">${truncatedDesc}</td>
-<td style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#5a6a7a;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:120px;">${truncatedResolution}</td>
-<td style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:120px;">
-  ${hasSolution ? `<span style="color:#6c3483;font-weight:600;">${trunc(r.devSolution, 50)}</span>` : '<span style="color:#bbb;">—</span>'}
+<td style="padding:5px 6px;font-size:9px;font-family:Arial,sans-serif;color:#7b2d8b;font-weight:700;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${r.id || '—'}</td>
+<td style="padding:5px 6px;font-size:9px;font-family:Arial,sans-serif;color:#1a2a3a;font-weight:600;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${trunc(r.project, 15)}</td>
+<td style="padding:5px 6px;text-align:center;border-bottom:1px solid #e8d8f8;"><span style="background:${pc.bg};color:${pc.c};font-weight:700;padding:2px 4px;border-radius:6px;font-size:8px;">${r.priority || '—'}</span></td>
+<td style="padding:5px 6px;font-size:9px;font-family:Arial,sans-serif;color:#3a5068;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${trunc(r.createdBy, 15) || '—'}</td>
+<td style="padding:5px 6px;font-size:9px;font-family:Arial,sans-serif;color:#3a5068;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${trunc(r.assignee, 15) || '—'}</td>
+<td style="padding:5px 6px;font-size:9px;font-family:Arial,sans-serif;color:#1a2a3a;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:120px;">${trunc(r.subject, 40) || '—'}</td>
+<td style="padding:5px 6px;font-size:8px;font-family:Arial,sans-serif;color:#5a6a7a;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:100px;">${truncatedDesc}</td>
+<td style="padding:5px 6px;font-size:8px;font-family:Arial,sans-serif;color:#5a6a7a;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:100px;">${truncatedResolution}</td>
+<td style="padding:5px 6px;font-size:8px;font-family:Arial,sans-serif;border-bottom:1px solid #e8d8f8;word-wrap:break-word;white-space:normal;max-width:100px;">
+  ${hasSolution ? `<span style="color:#6c3483;font-weight:600;">${truncatedDevSolution}</span>` : '<span style="color:#bbb;">—</span>'}
 </td>
-<td style="padding:6px 8px;text-align:center;border-bottom:1px solid #e8d8f8;"><span style="background:#f3e8ff;color:#6c3483;font-weight:700;padding:2px 6px;border-radius:8px;font-size:9px;white-space:nowrap;">${r.status || 'Under Observation'}</span></td>
-<td style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#6b7a8d;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${r.createdTime || '—'}</td>
-<td style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#6b7a8d;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${r.modifiedTime || '—'}</td>
-<td style="padding:6px 8px;text-align:center;border-bottom:1px solid #e8d8f8;"><span style="background:${daysColor.bg};color:${daysColor.c};font-weight:700;padding:2px 6px;border-radius:8px;font-size:9px;white-space:nowrap;">${daysDiff !== null ? daysDiff + 'd' : '—'}</span></td>
+<td style="padding:5px 6px;text-align:center;border-bottom:1px solid #e8d8f8;"><span style="background:#f3e8ff;color:#6c3483;font-weight:700;padding:2px 4px;border-radius:6px;font-size:8px;white-space:nowrap;">Obs</span></td>
+<td style="padding:5px 6px;font-size:8px;font-family:Arial,sans-serif;color:#6b7a8d;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${r.createdTime ? r.createdTime.split(' ')[0] : '—'}</td>
+<td style="padding:5px 6px;font-size:8px;font-family:Arial,sans-serif;color:#6b7a8d;border-bottom:1px solid #e8d8f8;white-space:nowrap;">${r.modifiedTime ? r.modifiedTime.split(' ')[0] : '—'}</td>
+<td style="padding:5px 6px;text-align:center;border-bottom:1px solid #e8d8f8;"><span style="background:${daysColor.bg};color:${daysColor.c};font-weight:700;padding:2px 6px;border-radius:8px;font-size:8px;white-space:nowrap;">${daysValue}d</span></td>
 </tr>`;
   }).join('');
   
   const body = `
 <p style="font-size:13px;font-weight:bold;color:#0a1628;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Dear Team,</p>
-<p style="font-size:13px;line-height:1.85;color:#2c3e50;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Please find below the detailed follow-up report for all tickets currently under <strong style="color:#7b2d8b;">"Under Observation"</strong> status. These tickets have been resolved by the development team and are now awaiting client / QA verification for final closure. Kindly review and take necessary action at the earliest.</p>
+<p style="font-size:13px;line-height:1.85;color:#2c3e50;margin:0 0 16px 0;font-family:Calibri,Arial,sans-serif;">Please find below the detailed follow-up report for all tickets currently under <strong style="color:#7b2d8b;">"Under Observation"</strong> status. These tickets have been resolved by the development team or technical support team and are now awaiting client / service team verification for final closure. Kindly review and take necessary action at the earliest.</p>
 
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:10px;"><tr>
 <td style="background:#f3e8ff;border-left:4px solid #7b2d8b;border-radius:0 6px 6px 0;padding:10px 14px;">
 <p style="font-size:12px;font-weight:700;color:#7b2d8b;margin:0 0 3px 0;font-family:Calibri,Arial,sans-serif;">🔵 Under Observation — Action Required</p>
-<p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.6;font-family:Calibri,Arial,sans-serif;">All tickets listed below have been fixed by the development team and placed under <strong>client / QA observation</strong>. If the fix is verified and accepted, kindly <strong>close the ticket in Zoho Desk</strong>. If issues persist or are not yet verified, please update the status and add remarks accordingly.</p>
+<p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.6;font-family:Calibri,Arial,sans-serif;">All tickets listed below have been fixed by the development team and are now awaiting client / service team verification. Please follow up for closure.</p>
 </td></tr></table>
 
-${crit > 0 ? `<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:18px;margin-top:8px;"><tr>
+${crit > 0 ? `<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:18px;"><tr>
 <td style="background:#fff0f0;border-left:4px solid #c0392b;border-radius:0 6px 6px 0;padding:10px 14px;">
-<p style="font-size:12px;font-weight:700;color:#c0392b;margin:0 0 3px 0;font-family:Calibri,Arial,sans-serif;">⚠ Critical Priority — ${crit} ticket${crit > 1 ? 's' : ''} require immediate client confirmation</p>
-<p style="font-size:12px;color:#3a3a3a;margin:0;line-height:1.6;font-family:Calibri,Arial,sans-serif;">There ${crit > 1 ? 'are' : 'is'} <strong>${crit} Critical priority ticket${crit > 1 ? 's' : ''}</strong> under observation. Please follow up with the client / QA team urgently and ensure these are either closed or escalated immediately.</p>
+<p style="font-size:12px;font-weight:700;color:#c0392b;margin:0 0 3px 0;font-family:Calibri,Arial,sans-serif;">⚠ Critical Priority — ${crit} ticket${crit > 1 ? 's' : ''} need immediate follow-up</p>
 </td></tr></table>` : ''}
 
-<p style="font-size:13px;font-weight:700;color:#0a1628;margin:20px 0 8px 0;font-family:Calibri,Arial,sans-serif;">📋 Project-wise Summary</p>
-<p style="font-size:11px;color:#6b7a8d;margin:0 0 10px 0;font-family:Calibri,Arial,sans-serif;">Report Date: <strong style="color:#0a1628;">${today}</strong> &nbsp;|&nbsp; Total Under Observation: <strong style="color:#7b2d8b;">${total} tickets</strong> &nbsp;|&nbsp; Projects: <strong style="color:#0a1628;">${projects.length}</strong> &nbsp;|&nbsp; Critical: <strong style="color:#c0392b;">${crit}</strong> &nbsp;|&nbsp; High: <strong style="color:#e65100;">${high}</strong></p>
+<p style="font-size:12px;font-weight:700;color:#0a1628;margin:15px 0 5px 0;font-family:Calibri,Arial,sans-serif;">📊 Summary</p>
+<p style="font-size:11px;color:#6b7a8d;margin:0 0 10px 0;">Total: <strong>${total}</strong> | Projects: <strong>${projects.length}</strong> | Critical: <strong style="color:#c0392b;">${crit}</strong> | High: <strong style="color:#e65100;">${high}</strong> | Medium: <strong style="color:#f57f17;">${med}</strong></p>
 
-<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="50%" style="border-radius:6px;overflow:hidden;border:1px solid #e0d0f0;margin-bottom:22px;">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="60%" style="border-radius:6px;overflow:hidden;border:1px solid #e0d0f0;margin-bottom:20px;">
 <thead><tr style="background:#000000;">
-<th style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Project Name</th>
-<th style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Tickets</th>
-<th style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Critical</th>
-<th style="padding:6px 8px;font-size:9px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">High</th>
+<th style="padding:5px 8px;font-size:9px;color:#fff;text-align:left;">Project</th>
+<th style="padding:5px 8px;font-size:9px;color:#fff;text-align:center;">Tickets</th>
+<th style="padding:5px 8px;font-size:9px;color:#fff;text-align:center;">Critical</th>
+<th style="padding:5px 8px;font-size:9px;color:#fff;text-align:center;">High</th>
 </tr></thead>
 <tbody>${projSummary}</tbody></table>
 
-<p style="font-size:13px;font-weight:700;color:#0a1628;margin:0 0 10px 0;font-family:Calibri,Arial,sans-serif;">🔵 Detailed Under Observation Report — ${today}</p>
+<p style="font-size:12px;font-weight:700;color:#0a1628;margin:0 0 8px 0;">📋 Detailed Report</p>
 <div style="overflow-x:auto;">
-<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-radius:6px;overflow:hidden;border:1px solid #e0d0f0;min-width:1100px;">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-radius:6px;overflow:hidden;border:1px solid #e0d0f0;min-width:1200px;">
 <thead><tr style="background:#000000;">
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Ticket ID</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Project</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Priority</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Created By</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Assigned To</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Subject</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Description</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;">Resolution</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:left;font-weight:700;white-space:nowrap;">Dev Solution</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;">Status</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;white-space:nowrap;">Created</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;white-space:nowrap;">Modified</th>
-<th style="padding:6px 6px;font-size:8px;font-family:Arial,sans-serif;color:#fff;text-align:center;font-weight:700;white-space:nowrap;">Days</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Ticket ID</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Project</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Priority</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Created By</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Assigned To</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Subject</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Description</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Resolution</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Dev Solution</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Status</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Created</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Modified</th>
+<th style="padding:5px 4px;font-size:8px;color:#fff;">Days</th>
 </tr></thead>
 <tbody>${detRows}</tbody>
 </table></div>
 
-<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:20px;"><tr>
-<td style="background:#f3e8ff;border-radius:6px;padding:10px 14px;">
-<p style="font-size:11px;font-weight:700;color:#6c3483;margin:0 0 4px 0;font-family:Calibri,Arial,sans-serif;">📌 Important Reminders for Observation Closure</p>
-<p style="font-size:11px;color:#3a3a3a;margin:0;line-height:1.7;font-family:Calibri,Arial,sans-serif;">
-1. Verify the <strong>Developer Solution</strong> is clearly documented before seeking client sign-off. &nbsp;|&nbsp;
-2. Follow up with the client / QA team if no response within 2 working days. &nbsp;|&nbsp;
-3. Once client confirms, <strong>close the ticket in Zoho Desk</strong> immediately. &nbsp;|&nbsp;
-4. If the client raises new issues, reopen with updated remarks and escalate to the developer.
-</p>
-</td></tr></table>
-
-<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:26px;"><tr><td style="border-top:1px dashed #c8a8e8;font-size:0;line-height:0;height:1px;">&#8203;</td></tr></table>
-<p style="font-size:11px;color:#9ab0c5;font-style:italic;margin:12px 0 0 0;font-family:Calibri,Arial,sans-serif;">Please feel free to reach out if you have any questions or need further details.</p>`;
+<p style="font-size:10px;color:#888;font-style:italic;margin-top:20px;">Please follow up for closure of tickets pending more than 7 days.</p>`;
 
   obsHTML = wrap(body, includeSignature);
   document.getElementById('emailPreview4').innerHTML = `<div class="email-shell">${obsHTML}</div>`;
