@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>M.S.S ROPE TRADERS · enterprise billing</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- jsPDF + autoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <!-- SheetJS -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+
+        .app-wrapper {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Glass morphism header */
+        .company-header {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 32px;
+            padding: 32px 40px;
+            margin-bottom: 28px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .company-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .company-address {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        .company-address i {
+            width: 20px;
+            color: #3b82f6;
+        }
+
+        /* Modern tab design */
+        .tab-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 8px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .tab {
+            padding: 14px 28px;
+            border-radius: 16px;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .tab i {
+            font-size: 1.1rem;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+        }
+
+        .tab.active {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Modern cards */
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 32px;
+            padding: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 28px;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2 i {
+            color: #3b82f6;
+        }
+
+        /* Grid layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        /* Form fields */
+        .field {
+            margin-bottom: 4px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .field input, .field select, .field textarea {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            font-size: 0.95rem;
+            color: #f1f5f9;
+            transition: all 0.2s;
+        }
+
+        .field input:focus, .field select:focus, .field textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .field input[readonly] {
+            background: rgba(15, 23, 42, 0.3);
+            color: #94a3b8;
+            border-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .field textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Items panel */
+        .items-panel {
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 28px;
+            padding: 24px;
+            margin: 24px 0;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .item-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 20px 24px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .item-fields {
+            display: flex;
+            flex: 1;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .item-fields select, .item-fields input {
+            flex: 1 1 130px;
+            padding: 14px 18px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            color: #f1f5f9;
+        }
+
+        .item-fields input[readonly] {
+            background: rgba(15, 23, 42, 0.3);
+            color: #94a3b8;
+        }
+
+        .remove-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            width: 46px;
+            height: 46px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .remove-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 16px 32px;
+            border-radius: 24px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            border-color: #2563eb;
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-success {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            border-color: #059669;
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-wa {
+            background: #25D366;
+            border-color: #25D366;
+            color: white;
+        }
+
+        .btn-wa:hover {
+            background: #20bd5a;
+            border-color: #20bd5a;
+            box-shadow: 0 10px 20px -5px rgba(37, 211, 102, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+        }
+
+        .btn-outline:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Total block */
+        .total-block {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 28px;
+            padding: 28px 32px;
+            margin: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .total-block span:first-child {
+            font-size: 1.2rem;
+            color: #94a3b8;
+        }
+
+        .total-block span:last-child {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+
+        /* Action bar */
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 28px;
+            justify-content: flex-end;
+        }
+
+        /* Master tables */
+        .master-table {
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 24px;
+            padding: 20px;
+            overflow-x: auto;
+            margin-top: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 16px 12px;
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        td {
+            padding: 16px 12px;
+            color: #e2e8f0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        /* Stat cards */
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 28px;
+            padding: 28px 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .stat-card span {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-top: 12px;
+        }
+
+        /* Filter row */
+        .filter-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 24px 0;
+        }
+
+        /* Computer note */
+        .computer-note {
+            margin-top: 20px;
+            padding: 16px 24px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .computer-note i {
+            color: #3b82f6;
+        }
+
+        /* Hidden pages */
+        .hidden {
+            display: none !important;
+        }
+
+        .admin-only {
+            display: none;
+        }
+
+        body.admin .admin-only {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .company-name {
+                font-size: 1.8rem;
+            }
+            
+            .tab {
+                padding: 12px 20px;
+            }
+            
+            .card {
+                padding: 24px;
+            }
+            
+            .total-block span:last-child {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper" id="mainApp">
+        <!-- Glass morphism header -->
+        <div class="company-header">
+            <div class="company-name">M.s.s Rope Traders</div>
+            <div class="company-address">
+                <span><i class="fas fa-map-pin"></i> M.p.d.o office (OP), Palamaner - 517408</span>
+                <span><i class="fas fa-map-marked-alt"></i> Chittoor district, Andhra Pradesh</span>
+                <span><i class="fas fa-phone-alt"></i> +91 98765 43210</span>
+                <span><i class="fas fa-envelope"></i> sales@mssroper.com</span>
+            </div>
+        </div>
+
+        <!-- Modern tabs -->
+        <div class="tab-container">
+            <button class="tab active" id="tabBillingBtn"><i class="fas fa-file-invoice"></i> Billing</button>
+            <button class="tab" id="tabItemMasterBtn"><i class="fas fa-boxes"></i> Item Master</button>
+            <button class="tab" id="tabUomMasterBtn"><i class="fas fa-ruler"></i> UOM Master</button>
+            <button class="tab" id="tabReportsBtn"><i class="fas fa-chart-bar"></i> Reports</button>
+            <button class="tab admin-only" id="tabAdminBtn"><i class="fas fa-cog"></i> Admin</button>
+        </div>
+
+        <!-- BILLING PAGE -->
+        <div id="billingPage" class="page">
+            <div class="card">
+                <h2><i class="fas fa-pen-alt"></i> Create Tax Invoice</h2>
+                
+                <div class="grid-2">
+                    <div class="field">
+                        <label>Buyer name</label>
+                        <input type="text" id="buyerName" value="SRI BALAJI GARMENTS">
+                    </div>
+                    <div class="field">
+                        <label>Buyer GSTIN</label>
+                        <input type="text" id="buyerGst" value="08AWGPG2356R1Z0">
+                    </div>
+                    <div class="field">
+                        <label>Buyer place</label>
+                        <input type="text" id="buyerPlace" value="JAIPUR, Code 8">
+                    </div>
+                    <div class="field">
+                        <label>Consignee name</label>
+                        <input type="text" id="consigneeName" value="SRI BALAJI GARMENTS">
+                    </div>
+                    <div class="field">
+                        <label>Consignee GST</label>
+                        <input type="text" id="consigneeGst" value="08AWGPG2356R1Z0">
+                    </div>
+                    <div class="field">
+                        <label>Consignee place</label>
+                        <input type="text" id="consigneePlace" value="JAIPUR, Code 8">
+                    </div>
+                    <div class="field">
+                        <label>Invoice No.</label>
+                        <input type="text" id="invoiceNo" readonly>
+                    </div>
+                    <div class="field">
+                        <label>Date</label>
+                        <input type="date" id="billDate" disabled>
+                    </div>
+                </div>
+
+                <!-- Items area -->
+                <div class="items-panel" id="itemsContainer"></div>
+                
+                <button class="btn btn-outline" id="addItemBtn">
+                    <i class="fas fa-plus-circle"></i> Add item from master
+                </button>
+
+                <!-- Total block -->
+                <div class="total-block">
+                    <span>Grand Total</span>
+                    <span id="grandTotalSpan">0.00</span>
+                </div>
+
+                <div class="grid-2">
+                    <div class="field">
+                        <label>Amount in words</label>
+                        <input type="text" id="amountWords" readonly value="Zero Only">
+                    </div>
+                </div>
+
+                <!-- Bank & Declaration -->
+                <div class="grid-2">
+                    <div class="field">
+                        <label>Bank details</label>
+                        <textarea id="bankDetails" rows="2">ICICI BANK, A/c No: 253805001415, IFSC: ICIC0002538</textarea>
+                    </div>
+                    <div class="field">
+                        <label>Declaration</label>
+                        <textarea id="declarationText" rows="2">We declare that this invoice shows the actual price and particulars are true.</textarea>
+                    </div>
+                </div>
+
+                <!-- Computer generated note -->
+                <div class="computer-note">
+                    <i class="fas fa-print"></i>
+                    This is a computer generated invoice – valid without signature
+                </div>
+
+                <!-- Action buttons -->
+                <div class="action-bar">
+                    <button class="btn btn-primary" id="generateBillBtn">
+                        <i class="fas fa-save"></i> Save Bill
+                    </button>
+                    <button class="btn btn-success" id="downloadPdfBtn">
+                        <i class="fas fa-download"></i> PDF
+                    </button>
+                    <button class="btn btn-wa" id="shareWhatsappBtn">
+                        <i class="fab fa-whatsapp"></i> WhatsApp PDF
+                    </button>
+                    <button class="btn" id="printInvoiceBtn">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ITEM MASTER PAGE -->
+        <div id="itemMasterPage" class="page hidden">
+            <div class="card">
+                <h2><i class="fas fa-boxes"></i> Item Master</h2>
+                
+                <div class="grid-3">
+                    <div class="field">
+                        <input type="text" id="itemNameInput" placeholder="Item name">
+                    </div>
+                    <div class="field">
+                        <input type="text" id="itemHsnInput" placeholder="HSN/SAC">
+                    </div>
+                    <div class="field">
+                        <select id="itemUomSelect">
+                            <option value="">Select UOM</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <input type="number" id="itemRateInput" placeholder="Rate ₹">
+                    </div>
+                    <div class="field">
+                        <button class="btn btn-primary" id="addItemMasterBtn">
+                            <i class="fas fa-plus"></i> Add to Master
+                        </button>
+                    </div>
+                </div>
+
+                <div class="master-table">
+                    <table id="itemMasterTable">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>HSN</th>
+                                <th>UOM</th>
+                                <th>Rate</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- UOM MASTER PAGE -->
+        <div id="uomMasterPage" class="page hidden">
+            <div class="card">
+                <h2><i class="fas fa-ruler"></i> UOM Master</h2>
+                
+                <div class="grid-3">
+                    <div class="field">
+                        <input type="text" id="uomNameInput" placeholder="e.g. METER, PCS, KG">
+                    </div>
+                    <div class="field">
+                        <button class="btn btn-primary" id="addUomBtn">
+                            <i class="fas fa-plus"></i> Add UOM
+                        </button>
+                    </div>
+                </div>
+
+                <div class="master-table">
+                    <table id="uomTable">
+                        <thead>
+                            <tr>
+                                <th>UOM</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- REPORTS PAGE -->
+        <div id="reportsPage" class="page hidden">
+            <div class="card">
+                <h2><i class="fas fa-chart-bar"></i> Sales Dashboard</h2>
+                
+                <div class="stat-cards">
+                    <div class="stat-card">
+                        <span>Daily Sales</span>
+                        <div class="value" id="dailyTotal">₹0</div>
+                    </div>
+                    <div class="stat-card">
+                        <span>Weekly Sales</span>
+                        <div class="value" id="weeklyTotal">₹0</div>
+                    </div>
+                    <div class="stat-card">
+                        <span>Monthly Sales</span>
+                        <div class="value" id="monthlyTotal">₹0</div>
+                    </div>
+                    <div class="stat-card">
+                        <span>Total Bills</span>
+                        <div class="value" id="billCount">0</div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <div class="field" style="flex: 1;">
+                        <input type="date" id="filterFrom">
+                    </div>
+                    <div class="field" style="flex: 1;">
+                        <input type="date" id="filterTo">
+                    </div>
+                    <button class="btn btn-primary" id="applyFilter">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                    <button class="btn btn-success" id="exportExcelBtn">
+                        <i class="fas fa-file-excel"></i> Excel
+                    </button>
+                </div>
+
+                <div class="master-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Bill No</th>
+                                <th>Date</th>
+                                <th>Buyer</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN PAGE -->
+        <div id="adminPage" class="page hidden admin-only">
+            <div class="card">
+                <h2><i class="fas fa-cog"></i> Admin Settings</h2>
+                
+                <div class="field">
+                    <label>Google Sheets Endpoint</label>
+                    <input type="url" id="sheetsEndpoint" value="https://script.google.com/macros/s/AKfycbzXQqGtxIihQ25BYRN-5F9eKt28plMqKn7aM5BoM-rF9B4R2R4_fxXehKLsCJdEkWnR/exec">
+                </div>
+
+                <div style="display: flex; gap: 16px; margin-top: 24px;">
+                    <button class="btn btn-primary" id="saveAdminBtn">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
+                    <button class="btn" id="adminDeleteAllBtn" style="background: #ef4444; color: white;">
+                        <i class="fas fa-trash"></i> Delete All Bills
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- MASTER DATA ----------
+            let itemsMaster = JSON.parse(localStorage.getItem('mss_items')) || [
+                { id: Date.now()+1, name: 'PP ROPE 10MM', hsn: '5607', uom: 'METER', rate: 145 },
+                { id: Date.now()+2, name: 'TARPAULIN 8X10', hsn: '6306', uom: 'PCS', rate: 850 },
+                { id: Date.now()+3, name: 'NYLON ROPE 16MM', hsn: '5607', uom: 'METER', rate: 45 }
+            ];
+            let uomMaster = JSON.parse(localStorage.getItem('mss_uom')) || ['METER', 'PCS', 'KG', 'BUNDEL', 'ROLL'];
+            let allBills = JSON.parse(localStorage.getItem('mss_bills')) || [];
+
+            // Company details
+            const COMPANY = {
+                name: 'M.s.s Rope Traders',
+                address: 'M.p.d.o office (OP), Palamaner - 517408, Chittoor district, Andhra Pradesh',
+                phone: '+91 98765 43210'
+            };
+
+            // Current invoice items
+            let currentItems = [{ id: Date.now(), product: '', hsn: '', uom: 'METER', qty: 1, rate: 0 }];
+
+            // DOM Elements
+            const billingPage = document.getElementById('billingPage');
+            const itemMasterPage = document.getElementById('itemMasterPage');
+            const uomMasterPage = document.getElementById('uomMasterPage');
+            const reportsPage = document.getElementById('reportsPage');
+            const adminPage = document.getElementById('adminPage');
+            const tabBilling = document.getElementById('tabBillingBtn');
+            const tabItem = document.getElementById('tabItemMasterBtn');
+            const tabUom = document.getElementById('tabUomMasterBtn');
+            const tabReports = document.getElementById('tabReportsBtn');
+            const tabAdmin = document.getElementById('tabAdminBtn');
+            const buyerName = document.getElementById('buyerName');
+            const buyerGst = document.getElementById('buyerGst');
+            const buyerPlace = document.getElementById('buyerPlace');
+            const consigneeName = document.getElementById('consigneeName');
+            const consigneeGst = document.getElementById('consigneeGst');
+            const consigneePlace = document.getElementById('consigneePlace');
+            const invoiceNo = document.getElementById('invoiceNo');
+            const billDate = document.getElementById('billDate');
+            const itemsContainer = document.getElementById('itemsContainer');
+            const grandTotalSpan = document.getElementById('grandTotalSpan');
+            const amountWords = document.getElementById('amountWords');
+            const bankDetails = document.getElementById('bankDetails');
+            const declarationText = document.getElementById('declarationText');
+            const addItemBtn = document.getElementById('addItemBtn');
+            const generateBtn = document.getElementById('generateBillBtn');
+            const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+            const shareWaBtn = document.getElementById('shareWhatsappBtn');
+            const printBtn = document.getElementById('printInvoiceBtn');
+            const itemNameInput = document.getElementById('itemNameInput');
+            const itemHsnInput = document.getElementById('itemHsnInput');
+            const itemUomSelect = document.getElementById('itemUomSelect');
+            const itemRateInput = document.getElementById('itemRateInput');
+            const addItemMasterBtn = document.getElementById('addItemMasterBtn');
+            const itemMasterTableBody = document.querySelector('#itemMasterTable tbody');
+            const uomNameInput = document.getElementById('uomNameInput');
+            const addUomBtn = document.getElementById('addUomBtn');
+            const uomTableBody = document.querySelector('#uomTable tbody');
+            const dailyTotal = document.getElementById('dailyTotal');
+            const weeklyTotal = document.getElementById('weeklyTotal');
+            const monthlyTotal = document.getElementById('monthlyTotal');
+            const billCountSpan = document.getElementById('billCount');
+            const filterFrom = document.getElementById('filterFrom');
+            const filterTo = document.getElementById('filterTo');
+            const applyFilter = document.getElementById('applyFilter');
+            const exportExcelBtn = document.getElementById('exportExcelBtn');
+            const reportTableBody = document.getElementById('reportTableBody');
+            const sheetsEndpoint = document.getElementById('sheetsEndpoint');
+            const saveAdminBtn = document.getElementById('saveAdminBtn');
+            const adminDeleteAllBtn = document.getElementById('adminDeleteAllBtn');
+
+            // Initialize
+            const today = new Date().toISOString().slice(0,10);
+            billDate.value = today;
+            invoiceNo.value = 'MSS-' + Date.now().toString().slice(-8);
+            
+            // Set filter defaults
+            const d = new Date();
+            filterFrom.value = new Date(d.getFullYear(), d.getMonth(), 1).toISOString().slice(0,10);
+            filterTo.value = today;
+
+            function generateInvoiceNo() { 
+                return 'MSS-' + Date.now().toString().slice(-8); 
+            }
+
+            // UOM dropdown refresh
+            function refreshUomSelects() {
+                let opts = uomMaster.map(u => `<option value="${u}">${u}</option>`).join('');
+                itemUomSelect.innerHTML = '<option value="">Select UOM</option>' + opts;
+            }
+
+            // Item master table
+            function renderItemMasterTable() {
+                let rows = itemsMaster.map((it, idx) => `<tr>
+                    <td>${it.name}</td>
+                    <td>${it.hsn}</td>
+                    <td>${it.uom}</td>
+                    <td>₹${it.rate}</td>
+                    <td>
+                        <button class="btn" style="padding:8px 16px;" onclick="editItem(${idx})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn" style="padding:8px 16px; background:#ef4444; color:white;" onclick="delItem(${idx})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>`).join('');
+                itemMasterTableBody.innerHTML = rows;
+            }
+
+            function renderUomTable() {
+                let rows = uomMaster.map((u, idx) => `<tr>
+                    <td>${u}</td>
+                    <td>
+                        <button class="btn" style="padding:8px 16px; background:#ef4444; color:white;" onclick="delUom(${idx})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>`).join('');
+                uomTableBody.innerHTML = rows;
+            }
+
+            window.delItem = (idx) => { 
+                itemsMaster.splice(idx,1); 
+                saveItemMaster(); 
+                renderItemMasterTable(); 
+                refreshItemDropdowns(); 
+            };
+
+            window.delUom = (idx) => { 
+                uomMaster.splice(idx,1); 
+                saveUomMaster(); 
+                renderUomTable(); 
+                refreshUomSelects(); 
+                refreshItemDropdowns(); 
+            };
+
+            window.editItem = (idx) => {
+                let it = itemsMaster[idx];
+                itemNameInput.value = it.name;
+                itemHsnInput.value = it.hsn;
+                itemRateInput.value = it.rate;
+                itemUomSelect.value = it.uom;
+                itemsMaster.splice(idx,1);
+                saveItemMaster(); 
+                renderItemMasterTable(); 
+                refreshItemDropdowns();
+            };
+
+            function saveItemMaster() { 
+                localStorage.setItem('mss_items', JSON.stringify(itemsMaster)); 
+            }
+
+            function saveUomMaster() { 
+                localStorage.setItem('mss_uom', JSON.stringify(uomMaster)); 
+            }
+
+            addItemMasterBtn.addEventListener('click', ()=>{
+                let name = itemNameInput.value.trim(); 
+                if(!name) return alert('Enter item name');
+                let hsn = itemHsnInput.value.trim() || '5607';
+                let uom = itemUomSelect.value; 
+                if(!uom) return alert('Select UOM');
+                let rate = parseFloat(itemRateInput.value) || 0;
+                itemsMaster.push({ id: Date.now(), name, hsn, uom, rate });
+                saveItemMaster(); 
+                renderItemMasterTable(); 
+                refreshItemDropdowns();
+                itemNameInput.value=''; 
+                itemHsnInput.value=''; 
+                itemRateInput.value='';
+            });
+
+            addUomBtn.addEventListener('click', ()=>{
+                let u = uomNameInput.value.trim(); 
+                if(u && !uomMaster.includes(u)) { 
+                    uomMaster.push(u); 
+                    saveUomMaster(); 
+                    renderUomTable(); 
+                    refreshUomSelects(); 
+                    refreshItemDropdowns(); 
+                }
+                uomNameInput.value='';
+            });
+
+            // Item dropdowns refresh
+            function refreshItemDropdowns() {
+                let opts = itemsMaster.map(it => 
+                    `<option value="${it.name}|${it.hsn}|${it.uom}|${it.rate}">${it.name}</option>`
+                ).join('');
+                document.querySelectorAll('.item-select').forEach(sel => {
+                    let current = sel.value;
+                    sel.innerHTML = '<option value="">Select item</option>' + opts;
+                    if(current) sel.value = current;
+                });
+            }
+
+            function renderItems() {
+                let html = '';
+                currentItems.forEach((it, index) => {
+                    html += `<div class="item-row">
+                        <div class="item-fields">
+                            <select class="item-select" data-index="${index}" onchange="handleItemSelect(${index}, this)">
+                                <option value="">Select item</option>
+                                ${itemsMaster.map(m => 
+                                    `<option value="${m.name}|${m.hsn}|${m.uom}|${m.rate}" 
+                                        ${m.name === it.product ? 'selected' : ''}>${m.name}</option>`
+                                ).join('')}
+                            </select>
+                            <input type="text" placeholder="HSN" value="${it.hsn}" readonly>
+                            <input type="text" placeholder="UOM" value="${it.uom}" readonly>
+                            <input type="number" placeholder="Qty" class="item-qty" min="0.5" step="0.5" value="${it.qty}" data-index="${index}">
+                            <input type="number" placeholder="Rate" value="${it.rate}" readonly>
+                            <input type="number" placeholder="Amount" readonly value="${(it.qty * it.rate).toFixed(2)}">
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>`;
+                });
+                itemsContainer.innerHTML = html;
+                attachItemListeners();
+                calcTotal();
+            }
+
+            window.handleItemSelect = (index, sel) => {
+                let val = sel.value;
+                if(val) {
+                    let parts = val.split('|');
+                    currentItems[index].product = parts[0];
+                    currentItems[index].hsn = parts[1];
+                    currentItems[index].uom = parts[2];
+                    currentItems[index].rate = parseFloat(parts[3]) || 0;
+                } else {
+                    currentItems[index].product = ''; 
+                    currentItems[index].hsn = ''; 
+                    currentItems[index].rate = 0;
+                }
+                renderItems();
+            };
+
+            window.removeItem = (idx) => { 
+                currentItems.splice(idx,1); 
+                if(currentItems.length===0) 
+                    currentItems.push({ id:Date.now(), product:'', hsn:'', uom:'METER', qty:1, rate:0 }); 
+                renderItems(); 
+            };
+
+            function attachItemListeners() {
+                document.querySelectorAll('.item-qty').forEach((inp,i) => 
+                    inp.addEventListener('input', e => {
+                        currentItems[i].qty = parseFloat(e.target.value) || 0;
+                        calcTotal();
+                    })
+                );
+            }
+
+            function calcTotal() {
+                let total = currentItems.reduce((s,it) => s + (it.qty * it.rate), 0);
+                grandTotalSpan.innerText = total.toFixed(2);
+                amountWords.value = numberToWords(total) + ' Only';
+                return total;
+            }
+
+            function numberToWords(amt) {
+                if(amt === 0) return 'Zero';
+                const ones = ['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten',
+                             'Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen',
+                             'Eighteen','Nineteen'];
+                const tens = ['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+                let num = Math.floor(amt);
+                if(num < 20) return ones[num];
+                if(num < 100) return tens[Math.floor(num/10)] + (num%10 ? ' ' + ones[num%10] : '');
+                if(num < 1000) return ones[Math.floor(num/100)] + ' Hundred' + (num%100 ? ' ' + numberToWords(num%100) : '');
+                if(num < 100000) return numberToWords(Math.floor(num/1000)) + ' Thousand' + (num%1000 ? ' ' + numberToWords(num%1000) : '');
+                return 'Amount';
+            }
+
+            addItemBtn.addEventListener('click', ()=>{ 
+                currentItems.push({ id:Date.now(), product:'', hsn:'', uom:'METER', qty:1, rate:0 }); 
+                renderItems(); 
+            });
+
+            // PDF Generation
+            function generatePDF(billData, itemsArray) {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                doc.setTextColor(0, 0, 0);
+                
+                let y = 20;
+                doc.setFontSize(20); 
+                doc.setFont('helvetica', 'bold');
+                doc.text(COMPANY.name, 15, y); 
+                y += 8;
+                
+                doc.setFontSize(10); 
+                doc.setFont('helvetica', 'normal');
+                doc.text(COMPANY.address, 15, y); 
+                y += 6;
+                doc.text('Ph: ' + COMPANY.phone, 15, y); 
+                y += 12;
+
+                doc.setFontSize(14); 
+                doc.setFont('helvetica', 'bold');
+                doc.text('TAX INVOICE', 105, y, { align:'center' }); 
+                y += 10;
+                
+                doc.setFontSize(9); 
+                doc.setFont('helvetica', 'normal');
+                doc.text('Buyer: ' + buyerName.value + ' ('+buyerGst.value+')', 15, y);
+                doc.text('Consignee: ' + consigneeName.value, 120, y); 
+                y += 5;
+                doc.text('Place: ' + buyerPlace.value, 15, y);
+                doc.text('Place: ' + consigneePlace.value, 120, y); 
+                y += 5;
+                doc.text('Invoice No: ' + invoiceNo.value + '   Date: ' + billDate.value, 15, y); 
+                y += 8;
+
+                const tableColumn = ['S.No', 'Product', 'HSN', 'Qty', 'UOM', 'Rate', 'Amount'];
+                const tableRows = itemsArray.map((it, idx) => [
+                    (idx+1).toString(), 
+                    it.product, 
+                    it.hsn, 
+                    it.qty.toString(), 
+                    it.uom,
+                    it.rate.toFixed(2), 
+                    (it.qty * it.rate).toFixed(2)
+                ]);
+                
+                doc.autoTable({
+                    startY: y,
+                    head: [tableColumn],
+                    body: tableRows,
+                    theme: 'grid',
+                    headStyles: { fillColor: [255, 255, 255], textColor: [0, 0, 0], lineColor: [0,0,0], lineWidth: 0.1, fontStyle: 'bold' },
+                    bodyStyles: { textColor: [0, 0, 0], lineColor: [0,0,0], lineWidth: 0.1 },
+                    foot: [['', '', '', '', '', 'Total', billData.total.toFixed(2)]],
+                    footStyles: { fillColor: [255, 255, 255], textColor: [0, 0, 0], lineColor: [0,0,0], fontStyle: 'bold' }
+                });
+                
+                y = doc.lastAutoTable.finalY + 10;
+                doc.setFontSize(9);
+                doc.text('Amount in words: ' + numberToWords(billData.total) + ' Only', 15, y); 
+                y += 8;
+                doc.text('Bank: ' + bankDetails.value, 15, y); 
+                y += 6;
+                doc.text('Declaration: ' + declarationText.value, 15, y); 
+                y += 15;
+                
+                doc.text('for ' + COMPANY.name, 130, y);
+                doc.text('Authorised Signatory', 130, y+6);
+                
+                doc.setFontSize(8); 
+                doc.text('This is a computer generated invoice – valid without signature', 15, y+15);
+                
+                return doc;
+            }
+
+            function getCurrentBill() {
+                let total = calcTotal();
+                return {
+                    billNo: invoiceNo.value,
+                    date: today,
+                    buyer: buyerName.value,
+                    total: total,
+                    items: currentItems.map(it => ({...it}))
+                };
+            }
+
+            function storeBill(bill) {
+                allBills.push(bill);
+                localStorage.setItem('mss_bills', JSON.stringify(allBills));
+                let endpoint = sheetsEndpoint.value;
+                fetch(endpoint, { 
+                    method:'POST', 
+                    mode:'no-cors', 
+                    headers:{'Content-Type':'application/json'}, 
+                    body:JSON.stringify(bill) 
+                }).catch(e=>{});
+            }
+
+            generateBtn.addEventListener('click', ()=>{
+                if(!currentItems[0].product) { 
+                    alert('Select at least one item'); 
+                    return; 
+                }
+                let bill = getCurrentBill();
+                storeBill(bill);
+                alert('Bill saved successfully');
+                currentItems = [{ id:Date.now(), product:'', hsn:'', uom:'METER', qty:1, rate:0 }];
+                invoiceNo.value = generateInvoiceNo();
+                renderItems(); 
+                renderReports();
+            });
+
+            downloadPdfBtn.addEventListener('click', ()=>{
+                if(!currentItems[0].product) { 
+                    alert('Add items first'); 
+                    return; 
+                }
+                let bill = getCurrentBill();
+                let doc = generatePDF(bill, currentItems);
+                doc.save(`invoice_${bill.billNo}.pdf`);
+            });
+
+            // WhatsApp PDF Share - FIXED to actually share PDF
+            shareWaBtn.addEventListener('click', async ()=>{
+                if(!currentItems[0].product) { 
+                    alert('Add items first'); 
+                    return; 
+                }
+                
+                let bill = getCurrentBill();
+                let doc = generatePDF(bill, currentItems);
+                let blob = doc.output('blob');
+                let file = new File([blob], `invoice_${bill.billNo}.pdf`, { type: 'application/pdf' });
+                
+                // Check if Web Share API with files is supported
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    try {
+                        await navigator.share({
+                            files: [file],
+                            title: 'Tax Invoice',
+                            text: `Invoice ${bill.billNo} from ${COMPANY.name}`
+                        });
+                        console.log('PDF shared successfully');
+                    } catch (error) {
+                        console.log('Share failed, falling back to download', error);
+                        // Fallback: download the PDF
+                        doc.save(`invoice_${bill.billNo}.pdf`);
+                        
+                        // Also open WhatsApp with a message
+                        let message = `Invoice ${bill.billNo} from ${COMPANY.name} - Amount: ₹${bill.total.toFixed(2)}`;
+                        let waUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                        window.open(waUrl, '_blank');
+                    }
+                } else {
+                    // Web Share not supported - download PDF and open WhatsApp
+                    doc.save(`invoice_${bill.billNo}.pdf`);
+                    
+                    let message = `Invoice ${bill.billNo} from ${COMPANY.name} - Amount: ₹${bill.total.toFixed(2)}`;
+                    let waUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                    window.open(waUrl, '_blank');
+                }
+            });
+
+            printBtn.addEventListener('click', ()=>{
+                let bill = getCurrentBill();
+                let doc = generatePDF(bill, currentItems);
+                let blob = doc.output('blob');
+                let url = URL.createObjectURL(blob);
+                let iframe = document.createElement('iframe'); 
+                iframe.style.display='none'; 
+                iframe.src=url;
+                document.body.appendChild(iframe); 
+                iframe.contentWindow.print();
+            });
+
+            // Reports
+            function renderReports() {
+                let filtered = allBills;
+                if(filterFrom.value) filtered = filtered.filter(b => b.date >= filterFrom.value);
+                if(filterTo.value) filtered = filtered.filter(b => b.date <= filterTo.value);
+                
+                reportTableBody.innerHTML = filtered.map(b => 
+                    `<tr><td>${b.billNo}</td><td>${b.date}</td><td>${b.buyer}</td><td>₹${b.total.toFixed(2)}</td></tr>`
+                ).join('');
+
+                const todayStr = today;
+                const weekAgo = new Date(Date.now() - 7*86400000).toISOString().slice(0,10);
+                const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(),1).toISOString().slice(0,10);
+                
+                let daily = allBills.filter(b => b.date === todayStr).reduce((s,b) => s + b.total, 0);
+                let weekly = allBills.filter(b => b.date >= weekAgo).reduce((s,b) => s + b.total, 0);
+                let monthly = allBills.filter(b => b.date >= monthStart).reduce((s,b) => s + b.total, 0);
+                
+                dailyTotal.innerText = '₹' + daily.toFixed(2);
+                weeklyTotal.innerText = '₹' + weekly.toFixed(2);
+                monthlyTotal.innerText = '₹' + monthly.toFixed(2);
+                billCountSpan.innerText = allBills.length;
+            }
+
+            applyFilter.addEventListener('click', renderReports);
+
+            exportExcelBtn.addEventListener('click', ()=>{
+                let data = [['BillNo', 'Date', 'Buyer', 'Total']];
+                allBills.forEach(b => data.push([b.billNo, b.date, b.buyer, b.total]));
+                let wb = XLSX.utils.book_new(); 
+                let ws = XLSX.utils.aoa_to_sheet(data);
+                XLSX.utils.book_append_sheet(wb, ws, 'Bills');
+                XLSX.writeFile(wb, 'mss_bills.xlsx');
+            });
+
+            // Admin
+            saveAdminBtn.addEventListener('click', ()=>{ 
+                localStorage.setItem('mss_endpoint', sheetsEndpoint.value); 
+                alert('Settings saved'); 
+            });
+
+            adminDeleteAllBtn.addEventListener('click', ()=>{ 
+                if(confirm('Delete all bills permanently?')) { 
+                    allBills = []; 
+                    localStorage.removeItem('mss_bills'); 
+                    renderReports(); 
+                } 
+            });
+
+            // Tab switching
+            function showPage(page) {
+                [billingPage, itemMasterPage, uomMasterPage, reportsPage, adminPage].forEach(p => p.classList.add('hidden'));
+                [tabBilling, tabItem, tabUom, tabReports, tabAdmin].forEach(t => t.classList.remove('active'));
+                
+                if(page === 'bill') { 
+                    billingPage.classList.remove('hidden'); 
+                    tabBilling.classList.add('active'); 
+                }
+                else if(page === 'item') { 
+                    itemMasterPage.classList.remove('hidden'); 
+                    tabItem.classList.add('active'); 
+                    renderItemMasterTable(); 
+                }
+                else if(page === 'uom') { 
+                    uomMasterPage.classList.remove('hidden'); 
+                    tabUom.classList.add('active'); 
+                    renderUomTable(); 
+                }
+                else if(page === 'reports') { 
+                    reportsPage.classList.remove('hidden'); 
+                    tabReports.classList.add('active'); 
+                    renderReports(); 
+                }
+                else if(page === 'admin') { 
+                    adminPage.classList.remove('hidden'); 
+                    tabAdmin.classList.add('active'); 
+                }
+            }
+
+            tabBilling.addEventListener('click', ()=> showPage('bill'));
+            tabItem.addEventListener('click', ()=> showPage('item'));
+            tabUom.addEventListener('click', ()=> showPage('uom'));
+            tabReports.addEventListener('click', ()=> showPage('reports'));
+            tabAdmin.addEventListener('click', ()=> showPage('admin'));
+
+            // Initialize
+            refreshUomSelects(); 
+            renderItemMasterTable(); 
+            renderUomTable(); 
+            renderItems(); 
+            renderReports();
+            document.body.classList.add('admin'); // for demo
+        })();
+    </script>
+</body>
+</html>
