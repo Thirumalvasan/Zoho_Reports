@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Finwise • Personal Expense Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        /* Light mode (default) */
+        :root {
+            --bg-page: #f4f7fc;
+            --surface: #ffffff;
+            --surface-2: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --border: #e2e8f0;
+            --accent: #3b82f6;
+            --accent-dark: #2563eb;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.05);
+            --input-bg: #ffffff;
+        }
+
+        body.dark {
+            --bg-page: #0f172a;
+            --surface: #1e293b;
+            --surface-2: #0f172a;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border: #334155;
+            --accent: #60a5fa;
+            --accent-dark: #3b82f6;
+            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            --input-bg: #334155;
+        }
+
+        body {
+            background: var(--bg-page);
+            color: var(--text-primary);
+            padding: 24px 20px 40px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* header & theme */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .theme-toggle {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 60px;
+            padding: 8px 18px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-primary);
+            box-shadow: var(--card-shadow);
+        }
+
+        /* grid layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 28px;
+            padding: 20px 22px;
+            border: 1px solid var(--border);
+            box-shadow: var(--card-shadow);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+        label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+        }
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.85rem;
+        }
+        button:hover {
+            background: var(--accent-dark);
+            transform: scale(0.98);
+        }
+        .btn-secondary {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+        .btn-danger {
+            background: var(--danger);
+        }
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 0.75rem;
+        }
+
+        .expense-item, .debt-item, .contribution-item, .split-owed {
+            background: var(--surface-2);
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent);
+            font-size: 0.85rem;
+        }
+
+        .summary-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .stat-badge {
+            background: var(--surface-2);
+            padding: 12px;
+            border-radius: 20px;
+            flex: 1;
+            text-align: center;
+        }
+        hr {
+            border-color: var(--border);
+            margin: 12px 0;
+        }
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .badge {
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+        }
+        .owed-positive {
+            color: var(--success);
+            font-weight: bold;
+        }
+        .owed-negative {
+            color: var(--danger);
+            font-weight: bold;
+        }
+        @media (max-width: 700px) {
+            body {
+                padding: 16px;
+            }
+            .card {
+                padding: 16px;
+            }
+        }
+        .scroll-list {
+            max-height: 260px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📒 Finwise Tracker</h1>
+        <button id="themeToggleBtn" class="theme-toggle">🌓 Dark / Light</button>
+    </div>
+
+    <div class="dashboard">
+        <!-- DAILY EXPENSE CARD -->
+        <div class="card">
+            <h2>➕ Add Expense</h2>
+            <div class="form-group">
+                <label>📅 Date</label>
+                <input type="date" id="expenseDate" value="">
+            </div>
+            <div class="form-group">
+                <label>📂 Category</label>
+                <select id="expenseCategory">
+                    <option>Tea/Coffee</option><option>Breakfast</option><option>Lunch</option>
+                    <option>Dinner</option><option>Petrol</option><option>Shopping</option>
+                    <option>Groceries</option><option>Entertainment</option><option>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>💰 Amount (₹)</label>
+                <input type="number" id="expenseAmount" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label>📝 Notes</label>
+                <input type="text" id="expenseNotes" placeholder="Optional description">
+            </div>
+            <button id="addExpenseBtn">➕ Add Expense</button>
+        </div>
+
+        <!-- DEBT (KADAN) MANAGEMENT -->
+        <div class="card">
+            <h2>📌 Debt (Kadan) Manager</h2>
+            <div class="form-group">
+                <label>🏷️ Lender / Borrower (Person)</label>
+                <input type="text" id="debtPerson" placeholder="e.g., Ramesh">
+            </div>
+            <div class="form-group">
+                <label>📝 Type</label>
+                <select id="debtType">
+                    <option value="borrowed">💰 Borrowed (I took loan)</option>
+                    <option value="repaid">✅ Repaid (I returned money)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>💵 Amount (₹)</label>
+                <input type="number" id="debtAmount" placeholder="0">
+            </div>
+            <div class="flex-between" style="gap: 8px;">
+                <button id="addDebtBtn" style="flex:1;">Record Transaction</button>
+                <button id="clearDebtHistoryBtn" class="btn-secondary btn-sm">Reset Debts</button>
+            </div>
+            <hr>
+            <div><strong>⚖️ Net Balance</strong> <span id="debtBalance">₹0</span></div>
+            <div class="scroll-list" id="debtHistoryList" style="margin-top: 10px;"></div>
+        </div>
+
+        <!-- CONTRIBUTION / FUNCTION EXPENSES -->
+        <div class="card">
+            <h2>🎉 Function / Contribution</h2>
+            <div class="form-group">
+                <label>📌 Event / Purpose</label>
+                <input type="text" id="contribPurpose" placeholder="e.g., Wedding, Housewarming">
+            </div>
+            <div class="form-group">
+                <label>💰 Contribution Amount</label>
+                <input type="number" id="contribAmount" placeholder="₹">
+            </div>
+            <button id="addContribBtn">➕ Record Contribution</button>
+            <hr>
+            <div><strong>📋 Contribution Records</strong></div>
+            <div id="contribList" class="scroll-list"></div>
+        </div>
+    </div>
+
+    <!-- GROUP EXPENSE SPLITTING -->
+    <div class="card" style="margin-bottom: 28px;">
+        <h2>👥 Group Expense Split</h2>
+        <div class="flex-between" style="gap: 15px; flex-wrap: wrap;">
+            <div style="flex:1"><label>🧾 Total Bill (₹)</label><input type="number" id="splitTotal" placeholder="Total amount"></div>
+            <div style="flex:1"><label>👥 Number of people</label><input type="number" id="splitPeople" placeholder="Count"></div>
+            <div style="flex:1"><label>👤 Who paid?</label><input type="text" id="splitPaidBy" placeholder="Your name or friend"></div>
+        </div>
+        <div style="margin: 12px 0;"><label>💡 Individual contributions (optional, if unequal)</label><input type="text" id="splitCustom" placeholder="Leave blank for equal split, or enter like: Me:500, Raj:300"></div>
+        <button id="calculateSplitBtn">⚖️ Calculate & Save Split</button>
+        <div id="splitResultArea" style="margin-top: 18px;"></div>
+        <div><strong>📌 Pending Group Balances</strong></div>
+        <div id="groupBalancesList" class="scroll-list"></div>
+    </div>
+
+    <!-- EXPENSE SUMMARY & REPORTS -->
+    <div class="card">
+        <h2>📊 Expense Summary & Reports</h2>
+        <div class="summary-stats">
+            <div class="stat-badge"><span>📆 Daily</span><br><span id="dailyTotal">₹0</span></div>
+            <div class="stat-badge"><span>🗓️ Monthly</span><br><span id="monthlyTotal">₹0</span></div>
+            <div class="stat-badge"><span>🏷️ Category Breakdown</span><br><span id="topCategoryHint">-</span></div>
+        </div>
+        <div><strong>📂 Category-wise</strong></div>
+        <div id="categoryBreakdown" style="font-size: 0.85rem; margin-top: 6px;"></div>
+        <hr>
+        <div><strong>💰 Recent Expenses</strong></div>
+        <div id="expensesList" class="scroll-list"></div>
+        <button id="clearAllDataBtn" class="btn-secondary btn-sm" style="margin-top: 12px;">🧹 Reset All Data</button>
+    </div>
+</div>
+
+<script>
+    // ---------- DATA STRUCTURES ----------
+    let expenses = [];      // { id, date, category, amount, notes }
+    let debts = [];        // { id, person, type, amount, timestamp }
+    let contributions = []; // { id, purpose, amount, dateAdded }
+    let groupSplits = [];   // { id, totalBill, peopleCount, paidBy, customMap, sharesOwed, timestamp, userShareStatus }
+
+    // helper: load & save localStorage
+    function loadData() {
+        const storedExp = localStorage.getItem("expenses");
+        const storedDebt = localStorage.getItem("debts");
+        const storedContrib = localStorage.getItem("contributions");
+        const storedGroups = localStorage.getItem("groupSplits");
+        if(storedExp) expenses = JSON.parse(storedExp);
+        if(storedDebt) debts = JSON.parse(storedDebt);
+        if(storedContrib) contributions = JSON.parse(storedContrib);
+        if(storedGroups) groupSplits = JSON.parse(storedGroups);
+    }
+    function saveAll() {
+        localStorage.setItem("expenses", JSON.stringify(expenses));
+        localStorage.setItem("debts", JSON.stringify(debts));
+        localStorage.setItem("contributions", JSON.stringify(contributions));
+        localStorage.setItem("groupSplits", JSON.stringify(groupSplits));
+    }
+
+    // helpers for summary
+    function getCurrentMonthYear(dateStr) {
+        let d = new Date(dateStr);
+        return `${d.getFullYear()}-${d.getMonth()+1}`;
+    }
+    function getTodayStr() {
+        return new Date().toISOString().slice(0,10);
+    }
+    function updateReports() {
+        let today = getTodayStr();
+        let dailySum = 0;
+        let monthlySum = 0;
+        let currentMonthKey = getCurrentMonthYear(today);
+        let categoryTotals = {};
+
+        expenses.forEach(exp => {
+            let amount = exp.amount;
+            if(exp.date === today) dailySum += amount;
+            if(getCurrentMonthYear(exp.date) === currentMonthKey) monthlySum += amount;
+            categoryTotals[exp.category] = (categoryTotals[exp.category] || 0) + amount;
+        });
+        document.getElementById("dailyTotal").innerHTML = `₹${dailySum.toFixed(2)}`;
+        document.getElementById("monthlyTotal").innerHTML = `₹${monthlySum.toFixed(2)}`;
+        let categoryHtml = "";
+        let topCat = Object.entries(categoryTotals).sort((a,b)=>b[1]-a[1])[0];
+        if(topCat) document.getElementById("topCategoryHint").innerHTML = `${topCat[0]} ₹${topCat[1].toFixed(2)}`;
+        else document.getElementById("topCategoryHint").innerHTML = "-";
+        for(let [cat, total] of Object.entries(categoryTotals)) {
+            categoryHtml += `<div>▪️ ${cat}: ₹${total.toFixed(2)}</div>`;
+        }
+        if(!categoryHtml) categoryHtml = "<div>No expenses</div>";
+        document.getElementById("categoryBreakdown").innerHTML = categoryHtml;
+        // recent expenses list
+        let expListHtml = "";
+        [...expenses].reverse().slice(0,8).forEach(exp => {
+            expListHtml += `<div class="expense-item"><div class="flex-between"><span><strong>${exp.date}</strong> ${exp.category}</span><span>₹${exp.amount.toFixed(2)}</span></div><div style="font-size:0.75rem;">${exp.notes || "—"}</div></div>`;
+        });
+        if(expenses.length===0) expListHtml = "<div>No expenses recorded.</div>";
+        document.getElementById("expensesList").innerHTML = expListHtml;
+    }
+
+    // DEBT LOGIC: borrowed => + amount (i owe more), repaid => - amount (reduce debt)
+    function updateDebtUI() {
+        let netBalance = 0;
+        debts.forEach(d => {
+            if(d.type === 'borrowed') netBalance += d.amount;
+            else netBalance -= d.amount;
+        });
+        document.getElementById("debtBalance").innerHTML = `₹${netBalance.toFixed(2)} ${netBalance>0 ? "(Owed to others)" : netBalance<0 ? "(You lent)" : "Settled"}`;
+        let historyHtml = "";
+        [...debts].reverse().slice(0,12).forEach(d => {
+            let sign = d.type === 'borrowed' ? '➕ Borrowed' : '✅ Repaid';
+            historyHtml += `<div class="debt-item"><strong>${d.person}</strong> — ${sign} ₹${d.amount}</div>`;
+        });
+        if(debts.length===0) historyHtml = "<div>No debt records</div>";
+        document.getElementById("debtHistoryList").innerHTML = historyHtml;
+        saveAll();
+    }
+
+    // CONTRIBUTION UI
+    function updateContribUI() {
+        let contribHtml = "";
+        [...contributions].reverse().forEach(c => {
+            contribHtml += `<div class="contribution-item"><span><strong>${c.purpose}</strong>  ₹${c.amount}</span><span style="font-size:0.7rem;"> ${new Date(c.dateAdded).toLocaleDateString()}</span></div>`;
+        });
+        if(contributions.length===0) contribHtml = "<div>No contributions added.</div>";
+        document.getElementById("contribList").innerHTML = contribHtml;
+        saveAll();
+    }
+
+    // GROUP SPLIT: core logic - recalc and store
+    function computeAndStoreSplit(total, peopleCount, paidBy, customInput) {
+        if(!total || total <=0 || !peopleCount || peopleCount <=0 || !paidBy.trim()) return {error:"Fill total, people count & who paid"};
+        let shares = {};
+        let customMap = null;
+        let customSharesValid = false;
+        if(customInput.trim() !== "") {
+            let parts = customInput.split(',');
+            let tempMap = {};
+            let sumCustom = 0;
+            for(let part of parts){
+                let kv = part.split(':');
+                if(kv.length===2){
+                    let name = kv[0].trim();
+                    let val = parseFloat(kv[1]);
+                    if(!isNaN(val)) { tempMap[name] = val; sumCustom+=val; }
+                }
+            }
+            if(Object.keys(tempMap).length === peopleCount && Math.abs(sumCustom - total) < 0.01){
+                customMap = tempMap;
+                customSharesValid = true;
+            }
+        }
+        let perHead = total / peopleCount;
+        let owedObj = {}; // who owes to whom (relative to paidBy)
+        if(customMap) {
+            for(let [person, share] of Object.entries(customMap)){
+                if(person === paidBy) continue;
+                if(share > 0) owedObj[person] = share; // this person owes share to payer
+            }
+            // the payer already paid total, so others' shares => receivable
+        } else {
+            for(let i=1; i<=peopleCount; i++){
+                let personName = `Person${i}`;
+                if(i===1 && customInput.trim()==="") personName = paidBy;
+                else personName = `Person${i}`;
+                if(personName === paidBy) continue;
+                owedObj[personName] = perHead;
+            }
+        }
+        let userShareStatus = { owes: 0, isOwed: 0 };
+        if(owedObj[paidBy]) delete owedObj[paidBy];
+        // Determine if current logged user is 'Me'? We'll treat current user as the app owner. paidBy can be "Me" or any name
+        // For simplicity, we interpret that the user (owner) is represented by name "Me" OR we also consider if paidBy === "Me". 
+        // We'll allow "Me" as reference. In UI we show payable or receivable for user.
+        let payerIsUser = (paidBy.toLowerCase() === "me");
+        let totalOwedToUser = 0;
+        let totalUserOwes = 0;
+        if(payerIsUser){
+            for(let [person, amount] of Object.entries(owedObj)){
+                totalOwedToUser += amount;
+            }
+            userShareStatus.isOwed = totalOwedToUser;
+        } else {
+            // if user is not payer, then user might be among the people? We assume user is "Me" among participants. If user not specified, show generic.
+            if(owedObj["Me"]) totalUserOwes = owedObj["Me"];
+            userShareStatus.owes = totalUserOwes;
+        }
+        let splitRecord = {
+            id: Date.now(),
+            totalBill: total,
+            peopleCount,
+            paidBy,
+            customMap: customMap || null,
+            timestamp: new Date().toISOString(),
+            userShare: { owes: userShareStatus.owes, isOwed: userShareStatus.isOwed },
+            rawOwed: owedObj
+        };
+        groupSplits.unshift(splitRecord);
+        saveAll();
+        return { success: true, splitRecord };
+    }
+
+    function renderGroupBalances() {
+        let balancesHtml = "";
+        let netUserOutstanding = 0; // positive => money to receive, negative => to pay
+        groupSplits.forEach(split => {
+            let userAmount = 0;
+            if(split.userShare.isOwed > 0) userAmount = split.userShare.isOwed;
+            else if(split.userShare.owes > 0) userAmount = -split.userShare.owes;
+            netUserOutstanding += userAmount;
+            let statusText = (userAmount>0) ? `✅ You should receive ₹${userAmount.toFixed(2)}` : (userAmount<0) ? `⚠️ You owe ₹${Math.abs(userAmount).toFixed(2)}` : "Settled";
+            balancesHtml += `<div class="split-owed"><b>💰 ${split.paidBy} paid ₹${split.totalBill}</b> — ${statusText}</div>`;
+        });
+        if(groupSplits.length===0) balancesHtml = "<div>No group expenses yet.</div>";
+        document.getElementById("groupBalancesList").innerHTML = balancesHtml;
+        // also show calculation result area for last split dynamic
+    }
+
+    function showSplitMessage(message, isError=false){
+        let area = document.getElementById("splitResultArea");
+        area.innerHTML = `<div style="background:${isError?'#ef444420':'#10b98120'}; padding:12px; border-radius:20px;">${message}</div>`;
+        setTimeout(()=>{ if(area.innerHTML === message || area.innerHTML.includes(message)) area.innerHTML=""; }, 3000);
+    }
+
+    // refresh all UI
+    function refreshAll() {
+        updateReports();
+        updateDebtUI();
+        updateContribUI();
+        renderGroupBalances();
+        // set default date
+        if(!document.getElementById("expenseDate").value) document.getElementById("expenseDate").value = getTodayStr();
+    }
+
+    // ---------- EVENT LISTENERS ----------
+    document.addEventListener("DOMContentLoaded", () => {
+        loadData();
+        refreshAll();
+
+        // Add Expense
+        document.getElementById("addExpenseBtn").addEventListener("click", () => {
+            let date = document.getElementById("expenseDate").value;
+            let category = document.getElementById("expenseCategory").value;
+            let amount = parseFloat(document.getElementById("expenseAmount").value);
+            let notes = document.getElementById("expenseNotes").value;
+            if(!date || isNaN(amount) || amount<=0) { alert("Valid date and positive amount required"); return; }
+            expenses.push({ id: Date.now(), date, category, amount, notes });
+            saveAll();
+            refreshAll();
+            document.getElementById("expenseAmount").value = "";
+            document.getElementById("expenseNotes").value = "";
+        });
+
+        // Debt
+        document.getElementById("addDebtBtn").addEventListener("click", () => {
+            let person = document.getElementById("debtPerson").value.trim();
+            let type = document.getElementById("debtType").value;
+            let amount = parseFloat(document.getElementById("debtAmount").value);
+            if(!person || isNaN(amount) || amount<=0) { alert("Enter valid person name & amount"); return; }
+            debts.push({ id: Date.now(), person, type, amount, timestamp: new Date().toISOString() });
+            saveAll();
+            refreshAll();
+            document.getElementById("debtPerson").value = "";
+            document.getElementById("debtAmount").value = "";
+        });
+        document.getElementById("clearDebtHistoryBtn").addEventListener("click", () => {
+            if(confirm("Clear all debt records?")) { debts = []; saveAll(); refreshAll(); }
+        });
+
+        // Contribution
+        document.getElementById("addContribBtn").addEventListener("click", () => {
+            let purpose = document.getElementById("contribPurpose").value.trim();
+            let amount = parseFloat(document.getElementById("contribAmount").value);
+            if(!purpose || isNaN(amount) || amount<=0){ alert("Purpose & valid amount needed"); return; }
+            contributions.push({ id: Date.now(), purpose, amount, dateAdded: new Date().toISOString() });
+            saveAll();
+            refreshAll();
+            document.getElementById("contribPurpose").value = "";
+            document.getElementById("contribAmount").value = "";
+        });
+
+        // Group Split calculate
+        document.getElementById("calculateSplitBtn").addEventListener("click", () => {
+            let total = parseFloat(document.getElementById("splitTotal").value);
+            let people = parseInt(document.getElementById("splitPeople").value);
+            let paidBy = document.getElementById("splitPaidBy").value.trim();
+            let customInput = document.getElementById("splitCustom").value;
+            if(isNaN(total) || total<=0 || isNaN(people) || people<1 || !paidBy){
+                showSplitMessage("❌ Fill total, people count & payer name", true);
+                return;
+            }
+            let result = computeAndStoreSplit(total, people, paidBy, customInput);
+            if(result.error) showSplitMessage(result.error, true);
+            else {
+                let msg = `✅ Split saved. ${result.splitRecord.userShare.isOwed ? `You receive ₹${result.splitRecord.userShare.isOwed.toFixed(2)}` : result.splitRecord.userShare.owes ? `You pay ₹${result.splitRecord.userShare.owes.toFixed(2)}` : "Even split"}`;
+                showSplitMessage(msg);
+                refreshAll();
+                document.getElementById("splitTotal").value = "";
+                document.getElementById("splitPeople").value = "";
+                document.getElementById("splitPaidBy").value = "";
+                document.getElementById("splitCustom").value = "";
+            }
+        });
+
+        // Theme toggle
+        const themeBtn = document.getElementById("themeToggleBtn");
+        if(localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
+        themeBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+            localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+        });
+        // reset all data
+        document.getElementById("clearAllDataBtn").addEventListener("click", () => {
+            if(confirm("⚠️ Delete ALL expenses, debts, contributions & group splits?")){
+                expenses = []; debts = []; contributions = []; groupSplits = [];
+                saveAll();
+                refreshAll();
+            }
+        });
+    });
+</script>
+</body>
+</html>
